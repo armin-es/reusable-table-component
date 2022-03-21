@@ -8,9 +8,13 @@
 - use memoization
 - testing
 - accessibility
-
-
 - mock graphql server
-- add storybook and make UI library
 - Containerize
--types
+
+
+
+- add storybook and make UI library
+- types
+- pagination has problem with high rows/page
+- handle null or empty filter term
+- sorting strings
