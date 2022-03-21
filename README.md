@@ -45,6 +45,5 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-
 docker-compose -f docker-compose.yml build
 docker run -p 80:80 --name react-app app-prod

@@ -14,7 +14,14 @@ import data from '../accounts-ui.json';
 // afterAll(() => server.close())
 
 test('displays the first row', async () => {
-  render(<PaginatedTable data={data} />);
+  render(
+    <PaginatedTable
+      data={data}
+      filterKeys={['firstName', 'lastName', 'country', 'mfa']}
+      sortingConfig={{ amount: 'number', createdAt: 'date' }}
+      rowsPerPage={20}
+    />
+  );
 
   // fireEvent.click(screen.getByText('Load Greeting'))
 

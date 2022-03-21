@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { T } from './styled';
+import React, { useCallback, useState } from 'react';
+import { StyledTable } from './styled';
 
 type SortingOrder = 'asc' | 'desc' | undefined;
 
@@ -23,6 +23,26 @@ export function Table({ data, filterKeys, sortingConfig }) {
   }>({ key: '', type: '', order: undefined });
   const [filterState, setFilterState] = useState<Record<string, string | never>>({});
 
+  const handleFilter = (key) => (event) => {
+    if (event.target.value === '') {
+      const newFilterState = { ...filterState };
+      delete newFilterState[key];
+      setFilterState(newFilterState);
+    } else {
+      setFilterState({ ...filterState, [key]: event.target.value });
+    }
+  };
+
+  const handleSorting = (key) => () => {
+    if (Object.hasOwn(sortingConfig, key)) {
+      setSortingState({
+        key,
+        type: sortingConfig[key],
+        order: sortingState.key === key ? getNextSortingOrder(sortingState.order) : 'desc'
+      });
+    }
+  };
+
   const sort = (data) => {
     const { key, type, order } = sortingState;
     if (type === 'number') {
@@ -37,44 +57,32 @@ export function Table({ data, filterKeys, sortingConfig }) {
     return data;
   };
 
-  const filter = (data) => {
-    const filterKeys = Object.keys(filterState);
-    return data.filter((item) => {
-      return filterKeys.every((key) => {
-        return item[key]?.toLowerCase().includes(filterState[key].toLowerCase());
+  const filter = useCallback(
+    (data) => {
+      const filterKeys = Object.keys(filterState);
+      return data.filter((item) => {
+        return filterKeys.every((key) => {
+          return item[key]?.toLowerCase().includes(filterState[key]?.toLowerCase());
+        });
       });
-    });
-  };
+    },
+    [data, filterState]
+  );
 
   const keys = Object.keys(data[0]);
+
   return (
-    <T>
+    <StyledTable>
       <thead>
         <tr>
           {keys.map((key) => (
             <th
               key={key}
               style={{ cursor: `${Object.hasOwn(sortingConfig, key) ? 'pointer' : 'auto'}` }}
-              onClick={() => {
-                if (Object.hasOwn(sortingConfig, key)) {
-                  setSortingState({
-                    key,
-                    type: sortingConfig[key],
-                    order:
-                      sortingState.key === key ? getNextSortingOrder(sortingState.order) : 'desc'
-                  });
-                }
-              }}>
+              onClick={handleSorting(key)}>
               {`${key} ${sortingState.key === key ? getSortingOrderLabel(sortingState.order) : ''}`}
-              {filterKeys.some((filterKey) => key === filterKey) && (
-                <input
-                  type="text"
-                  id="filter"
-                  placeholder={key}
-                  onChange={(event) => {
-                    setFilterState({ ...filterState, [key]: event.target.value });
-                  }}
-                />
+              {filterKeys.includes(key) && (
+                <input type="text" id="filter" placeholder={key} onChange={handleFilter(key)} />
               )}
             </th>
           ))}
@@ -89,6 +97,6 @@ export function Table({ data, filterKeys, sortingConfig }) {
           </tr>
         ))}
       </tbody>
-    </T>
+    </StyledTable>
   );
 }

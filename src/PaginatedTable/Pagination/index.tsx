@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Styled } from '../styled';
+import { Styled } from './styled';
 
 export const Pagination = ({
   currentPage,
@@ -78,12 +78,17 @@ export const Pagination = ({
       />
       <ul>
         <li>
+          <button type="button" onClick={setToFirstPage}>
+            First
+          </button>
+        </li>
+
+        <li>
           <button type="button" onClick={setToPreviousPage}>
             Previous
           </button>
         </li>
-        {/* <li><button type="button" onClick={setToFirstPage}>First</button></li> */}
-        {}
+
         {pageNumbers.map((i) => {
           return (
             <li key={i}>
@@ -96,10 +101,16 @@ export const Pagination = ({
             </li>
           );
         })}
-        {/* <li><button type="button" onClick={setToLastPage}>Last</button></li> */}
+
         <li>
           <button type="button" onClick={setToNextPage}>
             Next
+          </button>
+        </li>
+
+        <li>
+          <button type="button" onClick={setToLastPage}>
+            Last
           </button>
         </li>
       </ul>

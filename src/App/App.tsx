@@ -9,7 +9,12 @@ function App() {
 
   return (
     <div style={{ maxWidth: '95vw' }}>
-      <PaginatedTable data={users} />
+      <PaginatedTable
+        data={users}
+        filterKeys={['firstName', 'lastName', 'country', 'mfa']}
+        sortingConfig={{ amount: 'number', createdAt: 'date' }}
+        rowsPerPage={20}
+      />
     </div>
   );
 }

@@ -11,10 +11,9 @@
 - mock graphql server
 - Containerize
 
-
-
 - add storybook and make UI library
 - types
 - pagination has problem with high rows/page
 - handle null or empty filter term
 - sorting strings
+- storybook font

@@ -2,28 +2,48 @@ import React, { useState, useMemo } from 'react';
 import { Table } from './Table';
 import { Pagination } from './Pagination';
 
-export const PaginatedTable = ({ data }) => {
+interface PaginatedTableProps {
+  /**
+   * Table data
+   */
+  data: Array<Record<string, string | number | null>>;
+  /**
+   * List of data columns that you can search on
+   */
+  filterKeys?: Array<string>;
+  /**
+   * List of data columns that you can apply sorting and the column data types
+   */
+  sortingConfig?: Record<string, string>;
+  /**
+   * Number of data rows in each page
+   */
+  rowsPerPage?: number;
+}
+
+export const PaginatedTable = ({
+  data,
+  filterKeys = [],
+  sortingConfig = {},
+  rowsPerPage = 20
+}: PaginatedTableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [rowsCount, setRowsCount] = useState(rowsPerPage);
   const pageData = useMemo(
-    () => data.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage),
-    [data, currentPage, rowsPerPage]
+    () => data.slice((currentPage - 1) * rowsCount, currentPage * rowsCount),
+    [data, currentPage, rowsCount]
   );
   return (
     <>
       <div style={{ maxHeight: '90vh', overflow: 'auto' }}>
-        <Table
-          data={pageData}
-          filterKeys={['firstName', 'lastName', 'country', 'mfa']}
-          sortingConfig={{ amount: 'number', createdAt: 'date' }}
-        />
+        <Table data={pageData} filterKeys={filterKeys} sortingConfig={sortingConfig} />
       </div>
       <Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         rowCount={data.length}
-        rowsPerPage={rowsPerPage}
-        setRowsPerPage={setRowsPerPage}
+        rowsPerPage={rowsCount}
+        setRowsPerPage={setRowsCount}
       />
     </>
   );
