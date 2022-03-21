@@ -1,49 +1,39 @@
-# Getting Started with Create React App
+# Table Component with Filtering, Sorting and Pagination
+## Description
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a project that is centred around a reusable and configurable table component written in React, that is capable of filtering, sorting and pagination.
 
-## Available Scripts
+The table can be customized by passing config values to determine which columns can have filtering or sorting and also how it is paginated, i.e. number of rows per page.
 
-In the project directory, you can run:
+The input data does not have any constraint on the number of total rows or columns, only needs to follow the same data structure as the mock data (`accounts-ui.json`).
 
-### `yarn start`
+The following technologies are used in creating this application:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. [Create React App](https://github.com/facebook/create-react-app)
+2. TypeScript
+3. styled-components for styling in React
+4. Apollo Client for GraphQL query
+5. Mock Service Worker (msw) for mocking the GraphQL response in absence of a GraphQL server in the development phase
+6. Storybook: for documentation and for testing the UI component out of the context of the application
+7. Docker for containerization of the application, used for deployment
+8. Nginx as the web server inside the Docker container
+9. React Testing Library for testing React components
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## How to install the project
 
-### `yarn test`
+The client was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). After cloning the application you need to install the npm dependencies by executing `yarn` inside the root of project.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+## How to test the application
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+You can test the application locally using `yarn start` and then accessing it at `localhost:3000`.
+The application will run in development mode. The GraphQL query is mocked with the test data. In production the query will be using the server running at `/api`, which is not developed yet.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+You can also run `yarn storybook` and go to browser at port 6006, then navigate to Table section. You can test the application UI and also change controls to run the table using a different configuration.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Unit test are also found under `src/App/App.test.tsx`
 
-### `yarn eject`
+## How to build the project
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+You can generate a static build by executing `yarn build`. OR you can run the application in Docker with a Nginx web server by running `docker-compose up --build` which will expose the application at port 80.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-docker-compose -f docker-compose.yml build
-docker run -p 80:80 --name react-app app-prod
