@@ -7,15 +7,6 @@ export default {
   component: PaginatedTable
 } as ComponentMeta<typeof PaginatedTable>;
 
-// export const Table = () => (
-//   <PaginatedTable
-//     data={users}
-//     filterKeys={['firstName', 'lastName', 'country', 'mfa']}
-//     sortingConfig={{ amount: 'number', createdAt: 'date' }}
-//     rowsPerPage={20}
-//   />
-// );
-
 const Template: ComponentStory<typeof PaginatedTable> = (args) => <PaginatedTable {...args} />;
 
 export const Table = Template.bind({});
