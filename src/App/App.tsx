@@ -1,14 +1,15 @@
-// import React, { useEffect } from 'react';
-// import { Table } from '../Table';
-// import './App.css';
-
-import data from '../accounts-ui.json'
 import { PaginatedTable } from './../PaginatedTable';
+import { useGetUsers } from './useGetUsers';
+
 function App() {
-  
+  const { loading, error, users } = useGetUsers();
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error loading user accounts data</p>;
+
   return (
-    <div style={{maxWidth: '95vw'}}>
-      <PaginatedTable data={data} />
+    <div style={{ maxWidth: '95vw' }}>
+      <PaginatedTable data={users} />
     </div>
   );
 }
