@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
-import '@testing-library/jest-dom'
-import {PaginatedTable} from '../PaginatedTable';
-import data from '../accounts-ui.json'
+import '@testing-library/jest-dom';
+import { PaginatedTable } from '../PaginatedTable';
+import data from '../accounts-ui.json';
 // test('renders learn react link', () => {
 //   render(<App />);
-  // const linkElement = screen.getByText(/learn react/i);
-  // expect(linkElement).toBeInTheDocument();
+// const linkElement = screen.getByText(/learn react/i);
+// expect(linkElement).toBeInTheDocument();
 // });
 
 // beforeAll(() => server.listen())
@@ -14,23 +14,21 @@ import data from '../accounts-ui.json'
 // afterAll(() => server.close())
 
 test('displays the first row', async () => {
-  render(<PaginatedTable data={data} />)
+  render(<PaginatedTable data={data} />);
 
   // fireEvent.click(screen.getByText('Load Greeting'))
 
   // await screen.findByRole('heading')
-// console.log(screen.queryAllByRole('row'))
+  // console.log(screen.queryAllByRole('row'))
   expect(screen.queryAllByRole('row')).toHaveLength(21);
   // .toHaveTextContent('Marguerite')
   // screen.getByText('Sydnie');
   expect(screen.getByText('Sydnie')).toBeInTheDocument();
 
   const input = screen.getByPlaceholderText('firstName');
-  fireEvent.change(input, {target: {value: 'Sydnie'}});
-    expect(screen.queryAllByRole('row')).toHaveLength(2);
-
-
-})
+  fireEvent.change(input, { target: { value: 'Sydnie' } });
+  expect(screen.queryAllByRole('row')).toHaveLength(2);
+});
 
 // test('handles server error', async () => {
 //   server.use(
@@ -50,7 +48,6 @@ test('displays the first row', async () => {
 // })
 
 // jest.mock('./services/LoginService');
-
 
 // describe('Login component tests', () => {
 

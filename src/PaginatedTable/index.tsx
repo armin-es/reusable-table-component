@@ -1,24 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Table } from './Table';
 import { Pagination } from './Pagination';
-// import {useGetAllPosts} from './useGetAllPosts';
-import {pagination} from './helper';
 
-export const PaginatedTable = ({data}) => {
+export const PaginatedTable = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 20;
-  // const {loading, allPosts} = useGetAllPosts('https://jsonplaceholder.typicode.com/posts');
-  const {currentPosts, pageCount} = pagination(data, postsPerPage, currentPage);
-
+  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const pageData = useMemo(
+    () => data.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage),
+    [data, currentPage, rowsPerPage]
+  );
   return (
-    // loading ? <p>Loading...</p> :
-      <>
-      <div style={{maxHeight: '90vh', 
-        overflow: 'auto'}}>
-        <Table data={currentPosts} />
-        </div>
-        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} pageCount={pageCount} />
-      {/* // </> */}
-      </>
+    <>
+      <div style={{ maxHeight: '90vh', overflow: 'auto' }}>
+        <Table
+          data={pageData}
+          filterKeys={['firstName', 'lastName', 'country', 'mfa']}
+          sortingConfig={{ amount: 'number', createdAt: 'date' }}
+        />
+      </div>
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        rowCount={data.length}
+        rowsPerPage={rowsPerPage}
+        setRowsPerPage={setRowsPerPage}
+      />
+    </>
   );
 };
